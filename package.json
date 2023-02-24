@@ -1,0 +1,15 @@
+{
+  "name": "acnh",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "sass": "sass --watch ./sass/main.scss:./css/style.css --style compressed"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@stun3r/acnh-translations": "^1.0.1",
+    "sass": "^1.58.1"
+  }
+}

@@ -1,0 +1,158 @@
+// Variables
+$primaryColor: #692300;
+$secondaryColor: #df7307;
+$primaryBgColor: #dddf96;
+
+// General
+*, ::before, ::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    background: url(../img/background.jpg);
+    background-color: #9ED2C8;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+}
+
+
+// CONTENTS
+
+main {
+    // Accueil
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    h1 {
+        margin: 80px 0;
+        text-align: center;
+        color: $primaryColor;
+    }
+    .menu {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        span {
+            img {
+                width: 50px;
+                height: 50px;
+            }
+        }
+        .card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-radius: 15px;
+            padding: 15px;
+            font-size: 20px;
+            font-family: monospace;
+            background-color: $primaryBgColor;
+            color: $secondaryColor;
+            user-select: none;
+            cursor: pointer;
+            transition: box-shadow 0.2s;
+            &:hover {
+                box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+            }
+        }
+    }
+    // Villageois
+    .villagers {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 30px;
+        margin: 20px;
+        border-radius: 15px;
+        height: auto;
+        // overflow: auto;
+        /* Hide scrollbar for IE, Edge and Firefox */
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+        .card-villager {
+            position: relative;
+            display: inline-block;
+            background-color: $primaryBgColor;
+            text-align: center;
+            padding: 10px;
+            border-radius: 10px;
+            width: 220px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+            cursor: pointer;
+            user-select: none;
+            overflow: hidden;
+            .card-detail-villager {
+                z-index: 1;
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                height: 100%;
+                width: 100%;
+                padding: 10px;
+                border-radius: 10px;
+                transition: all 0.5s;
+                img {
+                    width: 70px;
+                }
+                .catchPhraseVil {
+                    font-size: 12px;
+                    font-style: italic;
+                }
+                .detailsVil {
+                    .fa-paw {
+                        color: $primaryColor;
+                    }
+                }
+            }
+            &:hover > .card-detail-villager {
+                bottom: 0;
+            }
+            .birthdayVil {
+                display: flex;
+                gap: 10px;
+                font-size: 10px;
+                align-items: center;
+            }
+            .namesVil {
+                display: flex;
+                justify-content: center;
+                font-size: 20px;
+                p {
+                    transform: translateX(8px);
+                }
+                .fa-venus, .fa-mars {
+                    position: relative;
+                    right: -20px;
+                }
+                .fa-mars {
+                    color: #6994ff;
+                }
+                .fa-venus {
+                    color: #FE929F;
+                }
+            }
+            .frenchNameVil {
+                font-size: 10px;
+                font-weight: 500;
+            }
+            img {
+                margin-top: 20px;
+                width: 180px;
+            }
+        }
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+}
