@@ -5,6 +5,7 @@ const baseTranslateUS = "USen";
 const main = document.querySelector(".main");
 const mainTitle = document.querySelector(".mainTitle");
 const menu = document.querySelector(".menu");
+const body = document.getElementById("body");
 
 async function getVillagers() {
     menu.remove();
@@ -128,15 +129,8 @@ async function getVillagers() {
                 }
             } 
 
-            const colors = villager.nh_details.fav_colors;
-            let color1 = "";
-            let color2 = "";
-            if (colors.length > 1) {
-                color1 = colors[0];
-                color2 = colors[1];
-            } else {
-                color1 = colors[0];
-            }
+            const colors = divVillager.querySelector(".colorsVil");
+            
             const styles = villager.nh_details.fav_styles;
             let style1 = "";
             let style2 = "";
@@ -155,8 +149,7 @@ async function getVillagers() {
                 <p class="modalPersonnalityVil">Personality : <span>${villager.personality}</span></p>
                 <div class="divModalColorsVil"> 
                     <p class="modalColorsVil">Colors : </p>
-                    <div class="color1" style="background-color: ${color1};">${color1}</div> 
-                    <div class="color2" style="background-color: ${color2};">${color2}</div>
+                    ${getColor(colors)}
                 </div>
                 <p class="modalStylesVil">Styles : <span class="style1">${style1}</span> <span class="style2">${style2}</span></p>
                 <p class="modalHobbyVil">Hobby : <span>${villager.nh_details.hobby}</span></p>
@@ -187,10 +180,13 @@ async function getVillagers() {
             `;
 
             modal.style.display = "block";
+            body.classList.add("active-modal");
 
             closeBtn.onclick = function() {
                 modal.style.display = "none";
+                body.classList.remove("active-modal");
             }
+
         })
 
         const divDetailVillager = document.createElement("div");
@@ -501,4 +497,281 @@ function getZodiacSignVil(zodiacSign) {
         default :
             return '../img/icons/zodiac/Balance.png'
     }
+}
+
+function getColor(colors) {
+    const color1 = colors.querySelector(".color1");
+    const color2 = colors.querySelector(".color2");
+    if (color1 && color2) {
+        return `${color1.outerHTML} ${color2.outerHTML}`;
+    } else {
+        return `${color1.outerHTML}`;
+    }
+}
+
+async function getFossiles() {
+    menu.remove();
+    mainTitle.innerText = "Fossiles";
+    mainTitle.style.margin = "80px 0 40px 0";
+
+    // ---- DATA SECTION ----
+    // LOAD DATA
+    const fossiles = await fetch(`${baseURL}/nh/fossils/individuals?&api_key=${apiKey}`);
+    const dataFossiles = await fossiles.json();
+    console.log("dataFossiles :");
+    console.log(dataFossiles);
+
+    // LOAD TRANSLATIONS
+    //TODO : mettre le nom FR des fossiles en bas de chaque fossile (comme pour les villageois)
+    const translationsFossilesNames = await fetch("../json/translations/Fossils.json");
+    const dataTranslationsFossilesNames = await translationsFossilesNames.json();
+    console.log(dataTranslationsFossilesNames);
+
+    const divFossiles = document.createElement("div");
+    divFossiles.classList.add("fossiles");
+
+    for (i = 0; i < dataFossiles.length; i++ ) {
+        const divFossile = document.createElement("div");
+        divFossile.classList.add("card-fossile");
+
+        const nameFos = document.createElement("p");
+        nameFos.classList.add("nameFos");
+        nameFos.innerText = capitalizeFirstLetter(dataFossiles[i].name);
+
+        const divDetailsFos = document.createElement("div");
+        divDetailsFos.classList.add("detailsFos");
+
+        const divImageFos = document.createElement("div");
+        divImageFos.classList.add("imageFos");
+        divImageFos.innerHTML = `
+            <img src="${dataFossiles[i].image_url}" alt="Image d'illustration du fossile : ${dataFossiles[i].name}"/>
+        `;
+
+        const divPrix = document.createElement("div");
+        divPrix.classList.add("pricesFos");
+        divPrix.innerHTML = `
+            <img title="Buy" class="iconClochette" src="../img/clochettepiece.png" alt="Image piece clochette"/>
+            <div class="divPrice">
+                <p class="price">${dataFossiles[i].sell}</p>
+                <img src="../img/clochette.png" alt="Image clochette"/>
+            </div>
+        `;
+
+        const colors = dataFossiles[i].colors
+        let color1 = "";
+        let color2 = "";
+        if (colors[1]) {
+            color1 = colors[0];
+            color2 = colors[1];
+        } else {
+            color1 = colors[0];
+        }
+        const divColors = document.createElement("div");
+        divColors.classList.add("colorsFos");
+        if (color2 === "") {
+            divColors.innerHTML = `
+                <i class="fa-solid fa-palette"></i>
+                <span class="color1" style="background-color: ${color1};">${color1}</span>
+            `;
+        } else {
+            divColors.innerHTML = `
+                <i class="fa-solid fa-palette"></i>
+                <span class="color1" style="background-color: ${color1};">${color1}</span>
+                <span class="color2" style="background-color: ${color2};">${color2}</span>
+            `;
+        }
+
+        divDetailsFos.append(divPrix, divColors);
+        divFossile.append(nameFos, divImageFos, divDetailsFos);
+        divFossiles.append(divFossile);
+    }
+
+    main.append(divFossiles);
+
+    // Ici je gère les couleurs du texte avec chroma.js
+    const color1Fos = document.querySelectorAll(".color1");
+    const color2Fos = document.querySelectorAll(".color2");
+    for (i = 0; i < color1Fos.length; i++) {
+        const color1Bg = chroma(color1Fos[i].style.backgroundColor);
+        if (chroma.contrast(color1Bg, 'black') > chroma.contrast(color1Bg, 'white')) {
+            color1Fos[i].style.color = "black";
+        } else {
+            color1Fos[i].style.color = "white";
+        }
+    }
+    for (i = 0; i < color2Fos.length; i++) {
+        const color2Bg = chroma(color2Fos[i].style.backgroundColor);
+        if (chroma.contrast(color2Bg, 'black') > chroma.contrast(color2Bg, 'white')) {
+            color2Fos[i].style.color = "black";
+        } else {
+            color2Fos[i].style.color = "white";
+        }
+    }
+}
+
+async function getArts() {
+    menu.remove();
+    mainTitle.innerText = "Arts";
+    mainTitle.style.margin = "80px 0 40px 0";
+
+    // ---- DATA SECTION ----
+    // LOAD DATA
+    const arts = await fetch(`${baseURL}/nh/art?&api_key=${apiKey}`);
+    const dataArts = await arts.json();
+    console.log("dataArts :");
+    console.log(dataArts);
+
+    const divArts = document.createElement("div");
+    divArts.classList.add("arts");
+
+    for (i = 0; i < dataArts.length; i++ ) {
+        const divArt = document.createElement("div");
+        divArt.classList.add("card-arts");
+
+        const nameArt = document.createElement("p");
+        nameArt.classList.add("nameArt");
+        nameArt.innerText = capitalizeFirstLetter(dataArts[i].name);
+
+        const imgArt = document.createElement("div");
+        imgArt.classList.add("imgArt");
+        imgArt.innerHTML = `
+            <img src="${dataArts[i].image_url}" alt="Image de l'art ${dataArts[i].name}"/>
+        `;
+
+        const fakeArt = dataArts[i].has_fake;
+        const divFake = document.createElement("div");
+        if (fakeArt) {
+            const fakeBtn = document.createElement("btn");
+            fakeBtn.innerText = "See Fake Art";
+            let dataFake = [
+                url = `${dataArts[i].image_url}`,
+                fake_url = `${dataArts[i].fake_image_url}`
+            ]
+            fakeBtn.classList.add("fakeBtn");
+            fakeBtn.addEventListener("click", () => {
+                // TODO: Rendre le bouton cliquable pour que l'utilisateur puisse voir le fake. S'inspirer de ce que j'ai fais précédemment avec les villageois.
+                console.log(dataFake);
+            });
+            divFake.append(fakeBtn);
+        } else {
+            const pFake = document.createElement("p");
+            pFake.classList.add("pFake");
+            pFake.innerText = "This Art Have No Fake";
+            divFake.append(pFake);
+        }
+
+        divArt.append(nameArt, imgArt, divFake);
+        divArts.append(divArt);
+    }
+
+    main.append(divArts);
+}
+
+async function getCreatureMarines() {
+    menu.remove();
+    mainTitle.innerText = "Créatures Marines";
+    mainTitle.style.margin = "80px 0 40px 0";
+
+    // ---- DATA SECTION ----
+    // LOAD DATA
+    const creaturemarine = await fetch(`${baseURL}/nh/sea?&api_key=${apiKey}`);
+    const dataCreaturemarine = await creaturemarine.json();
+    console.log("dataCreaturemarine :");
+    console.log(dataCreaturemarine);
+
+    const divCreaturesMarines = document.createElement("div");
+    divCreaturesMarines.classList.add("creatures_marines");
+
+    for (i = 0; i < dataCreaturemarine.length; i++ ) {
+        const divCreatureMarine = document.createElement("div");
+        divCreatureMarine.classList.add("card-creaturemarine");
+        
+        const nameCM = document.createElement("p");
+        nameCM.classList.add("nameCM");
+        nameCM.innerText = dataCreaturemarine[i].name;
+
+        const imgCM = document.createElement("div");
+        imgCM.classList.add("imgCM");
+        imgCM.innerHTML = `
+            <img src="${dataCreaturemarine[i].image_url}" alt="Image d'une créature marine appeler : ${dataCreaturemarine[i].name}" />
+        `;
+
+        divCreatureMarine.append(nameCM, imgCM);
+        divCreaturesMarines.append(divCreatureMarine);
+    }
+    main.append(divCreaturesMarines);
+}
+
+async function getPoissons() {
+    menu.remove();
+    mainTitle.innerText = "Poissons";
+    mainTitle.style.margin = "80px 0 40px 0";
+
+    // ---- DATA SECTION ----
+    // LOAD DATA
+    const poissons = await fetch(`${baseURL}/nh/fish?&api_key=${apiKey}`);
+    const dataPoissons = await poissons.json();
+    console.log("dataPoissons :");
+    console.log(dataPoissons);
+
+    const divPoissons = document.createElement("div");
+    divPoissons.classList.add("poissons");
+
+    for (i = 0; i < dataPoissons.length; i++ ) {
+        const divPoisson = document.createElement("div");
+        divPoisson.classList.add("card-poisson");
+        
+        const namePoisson = document.createElement("p");
+        namePoisson.classList.add("namePoisson");
+        namePoisson.innerText = dataPoissons[i].name;
+
+        const imgPoisson = document.createElement("div");
+        imgPoisson.classList.add("imgPoisson");
+        imgPoisson.innerHTML = `
+            <img src="${dataPoissons[i].image_url}" alt="Image du poisson : ${dataPoissons[i].name}" />
+        `;
+
+        divPoisson.append(namePoisson, imgPoisson);
+        divPoissons.append(divPoisson);
+    }
+    main.append(divPoissons);
+}
+
+async function getInsectes() {
+    menu.remove();
+    mainTitle.innerText = "Insectes";
+    mainTitle.style.margin = "80px 0 40px 0";
+
+    // ---- DATA SECTION ----
+    // LOAD DATA
+    const insectes = await fetch(`${baseURL}/nh/bugs?&api_key=${apiKey}`);
+    const dataInsectes = await insectes.json();
+    console.log("dataInsectes :");
+    console.log(dataInsectes);
+
+    const divInsectes = document.createElement("div");
+    divInsectes.classList.add("insectes");
+
+    for (i = 0; i < dataInsectes.length; i++ ) {
+        const divInsecte = document.createElement("div");
+        divInsecte.classList.add("card-insecte");
+        
+        const nameInsecte = document.createElement("p");
+        nameInsecte.classList.add("namePoisson");
+        nameInsecte.innerText = dataInsectes[i].name;
+
+        const imgInsecte = document.createElement("div");
+        imgInsecte.classList.add("imgInsecte");
+        imgInsecte.innerHTML = `
+            <img src="${dataInsectes[i].image_url}" alt="Image de l'insecte : ${dataInsectes[i].name}" />
+        `;
+
+        divInsecte.append(nameInsecte, imgInsecte);
+        divInsectes.append(divInsecte);
+    }
+    main.append(divInsectes);
+}
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
 }
