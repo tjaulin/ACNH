@@ -11,6 +11,7 @@ async function getVillagers() {
     menu.remove();
     mainTitle.innerText = "Listes des villageois";
     mainTitle.style.margin = "80px 0 40px 0"
+    afficherLoader();
 
     // Création du modal qui va contenir absolument tout les éléments que va contenir un villageois
     const modal = document.createElement("div");
@@ -24,26 +25,27 @@ async function getVillagers() {
                     <p class="modalFrenchName"></p>
                 </div>
                 <div class="divModalClose">
-                    <span class="close">&times;</span>
+                <span class="close">&times;</span>
                 </div>
             </div>
             <hr class="hrModalDetailsVil">
             <div class="divModalInfos">
                 <div class="divModalPhotosVil">
-                    <div class="divModalPosterVil"></div>
+                <div class="divModalPosterVil"></div>
                     <div class="divModalImageVil"></div>
-                </div>
-                <div class="divModalDetails"></div>
+                    </div>
+                    <div class="divModalDetails"></div>
             </div>
             <div class="divModalHousePicturesVil">
                 <div class="divModalExteriorHouseVil"></div>
                 <div class="divModalInteriorHouseVil"></div>
-            </div>
+                </div>
         </div>
-    `;
-    main.append(modal);
-
-    // ---- DATA SECTION ----
+        `;
+        main.append(modal);
+        
+    
+        // ---- DATA SECTION ----
     // LOAD DATA
     const villagers = await fetch(`${baseURL}/villagers?nhdetails=true&game=nh&api_key=${apiKey}`);
     const dataVillagers = await villagers.json();
@@ -69,20 +71,24 @@ async function getVillagers() {
     const dataKKMusic = await kkMusic.json();
     console.log("dataKKMusic :");
     console.log(dataKKMusic);
+    
+    const loader = document.querySelector("#loader");
+    loader.remove();
 
+    
     const searchVillager = document.createElement("div");
     searchVillager.classList.add("divRechercherVil")
     searchVillager.innerHTML = `
     <input type="text" onkeyup="rechercherVil()" id="maRechercheVillageois" name="search"
-        placeholder="Rechercher un villageois.." autocomplete="off"
+    placeholder="Rechercher un villageois.." autocomplete="off"
         aria-label="Rechercher un villageois d'acnh parmi le contenu du site"/>
-    <span class="input-border"></span>
-    `
-
-    const divVillagers = document.createElement("div");
-    divVillagers.classList.add("villagers");
-
-    for (i = 0; i < dataVillagers.length; i++ ) {
+        <span class="input-border"></span>
+        `
+        
+        const divVillagers = document.createElement("div");
+        divVillagers.classList.add("villagers");
+        
+        for (i = 0; i < dataVillagers.length; i++ ) {
         const divVillager = document.createElement("div");
         divVillager.classList.add("card-villager");
         let villager = dataVillagers[i];
@@ -513,6 +519,7 @@ async function getFossiles() {
     menu.remove();
     mainTitle.innerText = "Fossiles";
     mainTitle.style.margin = "80px 0 40px 0";
+    afficherLoader();
 
     // ---- DATA SECTION ----
     // LOAD DATA
@@ -526,6 +533,10 @@ async function getFossiles() {
     const translationsFossilesNames = await fetch("../json/translations/Fossils.json");
     const dataTranslationsFossilesNames = await translationsFossilesNames.json();
     console.log(dataTranslationsFossilesNames);
+
+    // Toujours remove le loader après les await qui permette de charger les données
+    const loader = document.querySelector("#loader");
+    loader.remove();
 
     const divFossiles = document.createElement("div");
     divFossiles.classList.add("fossiles");
@@ -613,6 +624,7 @@ async function getArts() {
     menu.remove();
     mainTitle.innerText = "Arts";
     mainTitle.style.margin = "80px 0 40px 0";
+    afficherLoader();
 
     // ---- DATA SECTION ----
     // LOAD DATA
@@ -620,6 +632,9 @@ async function getArts() {
     const dataArts = await arts.json();
     console.log("dataArts :");
     console.log(dataArts);
+
+    const loader = document.querySelector("#loader");
+    loader.remove();
 
     const divArts = document.createElement("div");
     divArts.classList.add("arts");
@@ -671,6 +686,7 @@ async function getCreatureMarines() {
     menu.remove();
     mainTitle.innerText = "Créatures Marines";
     mainTitle.style.margin = "80px 0 40px 0";
+    afficherLoader();
 
     // ---- DATA SECTION ----
     // LOAD DATA
@@ -678,6 +694,9 @@ async function getCreatureMarines() {
     const dataCreaturemarine = await creaturemarine.json();
     console.log("dataCreaturemarine :");
     console.log(dataCreaturemarine);
+
+    const loader = document.querySelector("#loader");
+    loader.remove();
 
     const divCreaturesMarines = document.createElement("div");
     divCreaturesMarines.classList.add("creatures_marines");
@@ -706,6 +725,7 @@ async function getPoissons() {
     menu.remove();
     mainTitle.innerText = "Poissons";
     mainTitle.style.margin = "80px 0 40px 0";
+    afficherLoader();
 
     // ---- DATA SECTION ----
     // LOAD DATA
@@ -713,6 +733,9 @@ async function getPoissons() {
     const dataPoissons = await poissons.json();
     console.log("dataPoissons :");
     console.log(dataPoissons);
+
+    const loader = document.querySelector("#loader");
+    loader.remove();
 
     const divPoissons = document.createElement("div");
     divPoissons.classList.add("poissons");
@@ -741,6 +764,7 @@ async function getInsectes() {
     menu.remove();
     mainTitle.innerText = "Insectes";
     mainTitle.style.margin = "80px 0 40px 0";
+    afficherLoader();
 
     // ---- DATA SECTION ----
     // LOAD DATA
@@ -748,6 +772,9 @@ async function getInsectes() {
     const dataInsectes = await insectes.json();
     console.log("dataInsectes :");
     console.log(dataInsectes);
+
+    const loader = document.querySelector("#loader");
+    loader.remove();
 
     const divInsectes = document.createElement("div");
     divInsectes.classList.add("insectes");
@@ -774,4 +801,13 @@ async function getInsectes() {
 
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function afficherLoader() {
+    let loaderContainer = document.createElement("div");
+    loaderContainer.classList.add("loader-container");
+    let loader = document.createElement("div");
+    loader.id = "loader";
+    loaderContainer.append(loader);
+    main.append(loaderContainer);
 }
