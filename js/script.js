@@ -42,7 +42,7 @@ async function getVillagers() {
                 </div>
         </div>
         `;
-        main.append(modal);
+    main.append(modal);
         
     
         // ---- DATA SECTION ----
@@ -626,6 +626,22 @@ async function getArts() {
     mainTitle.style.margin = "80px 0 40px 0";
     afficherLoader();
 
+    const modal = document.createElement("div");
+    modal.classList.add("modal-art");
+    modal.innerHTML = `
+        <div class="modal-content">
+            <div class="divModalClose">
+                <span class="close">&times;</span>
+            </div>
+            <div class="imgArts">
+                <div class="realArt"></div>
+                <div class="fakeArt"></div>
+            </div>
+            <div class="authenticity"></div>
+        </div>  
+        `;
+    main.append(modal);
+
     // ---- DATA SECTION ----
     // LOAD DATA
     const arts = await fetch(`${baseURL}/nh/art?&api_key=${apiKey}`);
@@ -657,15 +673,39 @@ async function getArts() {
         const divFake = document.createElement("div");
         if (fakeArt) {
             const fakeBtn = document.createElement("btn");
-            fakeBtn.innerText = "See Fake Art";
-            let dataFake = [
-                url = `${dataArts[i].image_url}`,
-                fake_url = `${dataArts[i].fake_image_url}`
-            ]
+            fakeBtn.innerText = "See Fake Art"
+            let dataFake = {
+                url:`${dataArts[i].image_url}`,
+                fake_url:`${dataArts[i].fake_image_url}`,
+                authenticity:`${dataArts[i].authenticity}`
+            }
             fakeBtn.classList.add("fakeBtn");
             fakeBtn.addEventListener("click", () => {
-                // TODO: Rendre le bouton cliquable pour que l'utilisateur puisse voir le fake. S'inspirer de ce que j'ai fais précédemment avec les villageois.
-                console.log(dataFake);
+                const closeBtn = document.getElementsByClassName("close")[0];
+                const realArt = document.querySelector(".realArt");
+                const fakeArt = document.querySelector(".fakeArt");
+                const authenticity = document.querySelector(".authenticity");
+
+                realArt.innerHTML = `
+                    <p>Réel :</p>
+                    <img src="${dataFake.url}" alt="Image real art"/>
+                `;
+                fakeArt.innerHTML = `
+                    <p>Fake :</p>
+                    <img src="${dataFake.fake_url}" alt="Image fake art"/>
+                `;
+
+                authenticity.innerHTML = `
+                    <p>${dataFake.authenticity}</p>
+                `;
+
+                modal.style.display = "block";
+                body.classList.add("active-modal");
+
+                closeBtn.onclick = function() {
+                    modal.style.display = "none";
+                    body.classList.remove("active-modal");
+                }
             });
             divFake.append(fakeBtn);
         } else {
@@ -707,7 +747,7 @@ async function getCreatureMarines() {
         
         const nameCM = document.createElement("p");
         nameCM.classList.add("nameCM");
-        nameCM.innerText = dataCreaturemarine[i].name;
+        nameCM.innerText = capitalizeFirstLetter(dataCreaturemarine[i].name);
 
         const imgCM = document.createElement("div");
         imgCM.classList.add("imgCM");
@@ -785,7 +825,7 @@ async function getInsectes() {
         
         const nameInsecte = document.createElement("p");
         nameInsecte.classList.add("namePoisson");
-        nameInsecte.innerText = dataInsectes[i].name;
+        nameInsecte.innerText = capitalizeFirstLetter(dataInsectes[i].name);
 
         const imgInsecte = document.createElement("div");
         imgInsecte.classList.add("imgInsecte");

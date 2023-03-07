@@ -581,8 +581,90 @@ main {
             cursor: pointer;
             user-select: none;
             overflow: hidden;
+            .fakeBtn {
+                font-size: 10px;
+                color: $primaryColor;
+                border: 2px solid $primaryColor;
+                border-radius: 5px;
+                padding: 5px;
+                transition: background-color 0.5s ;
+                &:hover {
+                    background-color: $primaryColor;
+                    color: white;
+                }
+            }
         }
     }
+
+    // ---- MODAL ARTS ----
+    .modal-art {
+        display: none;
+        position: fixed;
+        z-index: 2;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.9);
+        img {
+            cursor: pointer;
+        }
+        .modal-content {
+            position: relative;
+            margin: 2% auto;
+            width: 90%;
+            height: 90%;
+            border-radius: 10px;
+            .imgArts {
+                width: 100%;
+                // height: 100%;
+                display: flex;
+                justify-content: center;
+                text-align: center;
+                gap: 50px;
+                img {
+                    width: 350px;
+                    background-color: rgba(0, 0, 0, 0.8);
+                    border-radius: 20px;
+                }
+                p {
+                    font-size: 20px;
+                    color: white;
+                    margin-bottom: 2rem;
+                }
+            }
+            .authenticity {
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                padding: 15px;
+                background-color: rgba(0, 0, 0, 0.8);
+                color: white;
+                border-radius: 20px;
+            }
+            .divModalClose {
+                position: absolute;
+                right: 0;
+                top: -10px;
+                user-select: none;
+                .close {
+                    color: $secondaryColor;
+                    float: right;
+                    font-size: 38px;
+                    font-weight: bold;
+                    transition: color 0.5s;
+                    &:hover, &:focus {
+                        color: $primaryColor;
+                        text-decoration: none;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
+
 
     // CREATURE MARINES
     .creatures_marines {
