@@ -4,7 +4,9 @@ $secondaryColor: #df7307;
 $primaryBgColor: #dddf96;
 
 // General
-*, ::before, ::after {
+*,
+::before,
+::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -30,6 +32,7 @@ body.active-modal {
 .fa-mars {
     color: #6994ff;
 }
+
 .fa-venus {
     color: #FE929F;
 }
@@ -39,6 +42,7 @@ body.active-modal {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+
     #loader {
         border: 4px solid rgba(221, 223, 150, 0.5);
         border-left-color: $primaryColor;
@@ -48,13 +52,27 @@ body.active-modal {
         animation: spin 1s linear infinite;
     }
 }
-  
+
+#backButton {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 5px;
+    border: none;
+    background-color: $primaryBgColor;
+    color: $primaryColor;
+    user-select: none;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 20px;
+}
+
 @keyframes spin {
     to {
         transform: rotate(360deg);
     }
 }
-  
+
 
 
 // CONTENTS
@@ -65,34 +83,41 @@ main {
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
+
     h1 {
         margin: 80px 0;
         text-align: center;
         color: $primaryColor;
+
         @media screen and (max-width: 580px) {
             font-size: 25px;
         }
+
         @media screen and (max-width: 426px) {
             font-size: 20px;
         }
     }
+
     .menu {
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
         gap: 10px;
         width: 60%;
+
         @media screen and (max-width: 426px) {
             flex-wrap: nowrap;
             flex-direction: column;
             width: auto;
         }
+
         span {
             img {
                 width: 50px;
                 height: 50px;
             }
         }
+
         .card {
             position: relative;
             display: flex;
@@ -110,25 +135,30 @@ main {
             user-select: none;
             cursor: pointer;
             transition: box-shadow 0.2s;
+
             span {
                 position: absolute;
                 top: 50%;
                 left: 0;
-                transform: translate(5%, -50%);    
+                transform: translate(5%, -50%);
             }
+
             &:hover {
-                box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+                box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
             }
         }
     }
+
     // Villageois
     .divRechercherVil {
         position: relative;
         width: 30%;
         margin-bottom: 40px;
+
         @media screen and (max-width: 426px) {
             width: 50%;
         }
+
         input {
             font-size: 0.9rem;
             background-color: transparent;
@@ -140,12 +170,13 @@ main {
             border: none;
             border-bottom: 1px solid transparent;
             background: $primaryBgColor;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 
-            &:focus ~ .input-border {
+            &:focus~.input-border {
                 width: 100%;
             }
         }
+
         .input-border {
             position: absolute;
             background: $primaryColor;
@@ -166,8 +197,11 @@ main {
         border-radius: 15px;
         height: auto;
         /* Hide scrollbar for IE, Edge and Firefox */
-        -ms-overflow-style: none;  /* IE and Edge */
-        scrollbar-width: none;  /* Firefox */
+        -ms-overflow-style: none;
+        /* IE and Edge */
+        scrollbar-width: none;
+
+        /* Firefox */
         .card-villager {
             position: relative;
             display: inline-block;
@@ -176,10 +210,11 @@ main {
             padding: 10px;
             border-radius: 10px;
             width: 220px;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
             cursor: pointer;
             user-select: none;
             overflow: hidden;
+
             .card-detail-villager {
                 z-index: 1;
                 position: absolute;
@@ -190,14 +225,17 @@ main {
                 padding: 10px;
                 border-radius: 10px;
                 transition: all 0.5s;
+
                 .iconVil {
                     width: 70px;
                     align-self: center;
                 }
+
                 .catchPhraseVil {
                     font-size: 12px;
                     font-style: italic;
                 }
+
                 .detailsVil {
                     margin-top: 10px;
                     display: flex;
@@ -205,105 +243,133 @@ main {
                     flex-wrap: wrap;
                     font-size: 10px;
                     row-gap: 7px;
+
                     >* {
                         display: flex;
                         align-items: center;
                         gap: 8px;
                         overflow: hidden;
                     }
+
                     .speciesVil {
                         width: 50%;
                     }
+
                     .personalityVil {
                         width: 50%;
+
                         .iconPersonality {
                             width: 12px;
                         }
+
                         font-size: 12px;
                     }
+
                     .colorsVil {
                         width: 50%;
-                        .color1, .color2 {
+
+                        .color1,
+                        .color2 {
                             font-size: 8px;
                             border-radius: 5px;
                             padding: 2px;
                         }
                     }
+
                     .hobbyVil {
                         width: 50%;
                     }
+
                     .stylesVil {
                         width: 50%;
                         transform: translateX(-2px);
+
                         .style2 {
                             padding-right: 5px;
                         }
                     }
+
                     .favMusicVil {
                         width: 50%;
+
                         .favCoverSongVil {
                             width: 12px;
                         }
                     }
+
                     .fa-paw {
                         color: $primaryColor;
                     }
+
                     .fa-palette {
                         color: $primaryBgColor;
                     }
+
                     .fa-shirt {
                         color: #B33F40;
                     }
                 }
+
                 .hrQuoteVil {
                     margin: 20px 0 10px 0;
                     width: 100%;
                     border: none;
                     border-radius: 50px;
-                    height: 3px; 
+                    height: 3px;
                 }
+
                 .divQuoteVil {
                     font-size: 10px;
                     font-style: italic;
                 }
             }
-            &:hover > .card-detail-villager {
+
+            &:hover>.card-detail-villager {
                 bottom: 0;
             }
+
             .birthdayVil {
                 position: relative;
                 display: flex;
                 gap: 10px;
                 font-size: 10px;
                 align-items: center;
+
                 .iconZodiacSignVil {
                     position: absolute;
                     right: 0;
                     width: 30px;
                 }
             }
+
             .namesVil {
                 margin-top: 10px;
                 display: flex;
                 justify-content: center;
                 font-size: 20px;
+
                 p {
                     transform: translateX(8px);
                 }
-                .fa-venus, .fa-mars {
+
+                .fa-venus,
+                .fa-mars {
                     position: relative;
                     right: -20px;
                 }
             }
+
             .frenchNameVil {
                 margin-bottom: 5px;
                 font-size: 10px;
                 font-weight: 500;
             }
+
             img {
                 width: 180px;
             }
         }
+
         /* Hide scrollbar for Chrome, Safari and Opera */
         &::-webkit-scrollbar {
             display: none;
@@ -321,52 +387,63 @@ main {
         width: 100%;
         height: 100%;
         overflow: auto;
-        background-color: rgba(0,0,0,0.4);
+        background-color: rgba(0, 0, 0, 0.4);
+
         img {
             cursor: pointer;
         }
+
         .modal-content {
             background-color: $primaryBgColor;
             margin: 2% auto;
             width: 560px;
             height: 670px;
             border-radius: 10px;
+
             .navbarModalVil {
                 position: relative;
                 display: flex;
                 align-items: center;
                 margin-left: 28px;
                 gap: 50px;
+
                 .divModalIconVil {
                     width: auto;
                     height: auto;
                     margin: 0;
                     padding: 0;
+
                     img {
                         width: 100px;
                     }
                 }
+
                 .divTitleVil {
                     .modalNameVil {
                         font-size: 26px;
                     }
+
                     .modalFrenchName {
                         font-size: 16px;
                         font-weight: 300;
                     }
                 }
+
                 .divModalClose {
                     position: absolute;
                     right: 0;
                     top: -10px;
                     user-select: none;
+
                     .close {
                         color: $secondaryColor;
                         float: right;
                         font-size: 38px;
                         font-weight: bold;
                         transition: color 0.5s;
-                        &:hover, &:focus {
+
+                        &:hover,
+                        &:focus {
                             color: $primaryColor;
                             text-decoration: none;
                             cursor: pointer;
@@ -374,26 +451,32 @@ main {
                     }
                 }
             }
+
             .divModalInfos {
                 display: flex;
                 padding: 15px;
                 column-gap: 60px;
+
                 .divModalPhotosVil {
                     text-align: center;
+
                     p {
                         margin-bottom: 20px;
                     }
+
                     .divModalPosterVil {
                         img {
                             width: 130px;
                         }
                     }
+
                     .divModalImageVil {
                         img {
                             width: 60px;
                         }
                     }
                 }
+
                 .divModalDetails {
                     font-family: monospace, sans-serif;
                     width: 100%;
@@ -402,10 +485,12 @@ main {
                     row-gap: 10px;
                     font-weight: 300;
                     font-size: 14px;
+
                     h2 {
                         text-align: center;
                         margin: 10px 0 20px 0;
                     }
+
                     .modalBirthdayVil {
                         position: relative;
                         display: flex;
@@ -413,6 +498,7 @@ main {
                         column-gap: 5px;
                         width: 100%;
                         align-items: center;
+
                         img {
                             position: absolute;
                             right: 0;
@@ -420,11 +506,14 @@ main {
                             cursor: pointer;
                         }
                     }
+
                     .divModalColorsVil {
                         display: flex;
                         align-items: center;
                         gap: 25px;
-                        .color1, .color2 {
+
+                        .color1,
+                        .color2 {
                             font-size: 14px;
                             border-radius: 50px;
                             padding: 5px;
@@ -432,10 +521,12 @@ main {
                             user-select: none;
                         }
                     }
+
                     .modalMusicVil {
                         display: flex;
                         align-items: center;
                         column-gap: 25px;
+
                         img {
                             width: 50px;
                             cursor: pointer;
@@ -443,13 +534,16 @@ main {
                     }
                 }
             }
+
             .divModalHousePicturesVil {
                 display: flex;
                 justify-content: space-evenly;
                 align-items: center;
+
                 img {
                     width: 200px;
                 }
+
                 .lightbox {
                     position: fixed;
                     top: 0;
@@ -461,17 +555,21 @@ main {
                     justify-content: center;
                     align-items: center;
                     z-index: 3;
+
                     img {
                         max-width: 90%;
                         max-height: 90%;
                         transition: all 0.3s ease-in-out;
                     }
+
                     &:target {
                         display: flex;
                     }
+
                     &:target img {
                         transform: scale(3);
                     }
+
                     .close-btn {
                         position: fixed;
                         top: 0;
@@ -481,7 +579,9 @@ main {
                         font-weight: bold;
                         transition: color 0.5s;
                         text-decoration: none;
-                        &:hover, &:focus {
+
+                        &:hover,
+                        &:focus {
                             color: $primaryColor;
                             text-decoration: none;
                             cursor: pointer;
@@ -502,8 +602,11 @@ main {
         border-radius: 15px;
         height: auto;
         /* Hide scrollbar for IE, Edge and Firefox */
-        -ms-overflow-style: none;  /* IE and Edge */
-        scrollbar-width: none;  /* Firefox */
+        -ms-overflow-style: none;
+        /* IE and Edge */
+        scrollbar-width: none;
+
+        /* Firefox */
         .card-fossile {
             position: relative;
             display: inline-block;
@@ -512,43 +615,52 @@ main {
             padding: 10px;
             border-radius: 10px;
             width: 220px;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
             cursor: pointer;
             user-select: none;
             overflow: hidden;
+
             .detailsFos {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+
                 .pricesFos {
                     display: flex;
                     font-size: 12px;
                     font-weight: 100;
                     width: 40%;
                     gap: 10px;
+
                     .iconClochette {
                         width: 25px;
                     }
+
                     .divPrice {
                         display: flex;
                         align-items: center;
                         gap: 5px;
+
                         img {
                             width: 15px;
                         }
                     }
                 }
+
                 .colorsFos {
                     display: flex;
                     align-items: center;
                     justify-content: flex-end;
                     width: 50%;
                     gap: 10px;
-                    .color1, .color2 {
+
+                    .color1,
+                    .color2 {
                         font-size: 8px;
                         border-radius: 5px;
                         padding: 2px;
                     }
+
                     .fa-palette {
                         color: $primaryColor;
                     }
@@ -567,8 +679,11 @@ main {
         border-radius: 15px;
         height: auto;
         /* Hide scrollbar for IE, Edge and Firefox */
-        -ms-overflow-style: none;  /* IE and Edge */
-        scrollbar-width: none;  /* Firefox */
+        -ms-overflow-style: none;
+        /* IE and Edge */
+        scrollbar-width: none;
+
+        /* Firefox */
         .card-arts {
             position: relative;
             display: inline-block;
@@ -577,17 +692,19 @@ main {
             padding: 10px;
             border-radius: 10px;
             width: 220px;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
             cursor: pointer;
             user-select: none;
             overflow: hidden;
+
             .fakeBtn {
                 font-size: 10px;
                 color: $primaryColor;
                 border: 2px solid $primaryColor;
                 border-radius: 5px;
                 padding: 5px;
-                transition: background-color 0.5s ;
+                transition: background-color 0.5s;
+
                 &:hover {
                     background-color: $primaryColor;
                     color: white;
@@ -606,16 +723,19 @@ main {
         width: 100%;
         height: 100vh;
         overflow: auto;
-        background-color: rgba(0,0,0,0.9);
+        background-color: rgba(0, 0, 0, 0.9);
+
         img {
             cursor: pointer;
         }
+
         .modal-content {
             position: relative;
             margin: 2% auto;
             width: 90%;
             height: 90%;
             border-radius: 10px;
+
             .imgArts {
                 width: 100%;
                 // height: 100%;
@@ -623,17 +743,20 @@ main {
                 justify-content: center;
                 text-align: center;
                 gap: 50px;
+
                 img {
                     width: 350px;
                     background-color: rgba(0, 0, 0, 0.8);
                     border-radius: 20px;
                 }
+
                 p {
                     font-size: 20px;
                     color: white;
                     margin-bottom: 2rem;
                 }
             }
+
             .authenticity {
                 position: absolute;
                 bottom: 0;
@@ -644,18 +767,22 @@ main {
                 color: white;
                 border-radius: 20px;
             }
+
             .divModalClose {
                 position: absolute;
                 right: 0;
                 top: -10px;
                 user-select: none;
+
                 .close {
                     color: $secondaryColor;
                     float: right;
                     font-size: 38px;
                     font-weight: bold;
                     transition: color 0.5s;
-                    &:hover, &:focus {
+
+                    &:hover,
+                    &:focus {
                         color: $primaryColor;
                         text-decoration: none;
                         cursor: pointer;
@@ -676,8 +803,11 @@ main {
         border-radius: 15px;
         height: auto;
         /* Hide scrollbar for IE, Edge and Firefox */
-        -ms-overflow-style: none;  /* IE and Edge */
-        scrollbar-width: none;  /* Firefox */
+        -ms-overflow-style: none;
+        /* IE and Edge */
+        scrollbar-width: none;
+
+        /* Firefox */
         .card-creaturemarine {
             position: relative;
             display: inline-block;
@@ -686,7 +816,7 @@ main {
             padding: 10px;
             border-radius: 10px;
             width: 220px;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
             cursor: pointer;
             user-select: none;
             overflow: hidden;
@@ -703,8 +833,11 @@ main {
         border-radius: 15px;
         height: auto;
         /* Hide scrollbar for IE, Edge and Firefox */
-        -ms-overflow-style: none;  /* IE and Edge */
-        scrollbar-width: none;  /* Firefox */
+        -ms-overflow-style: none;
+        /* IE and Edge */
+        scrollbar-width: none;
+
+        /* Firefox */
         .card-poisson {
             position: relative;
             display: inline-block;
@@ -713,7 +846,7 @@ main {
             padding: 10px;
             border-radius: 10px;
             width: 220px;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
             cursor: pointer;
             user-select: none;
             overflow: hidden;
@@ -730,8 +863,11 @@ main {
         border-radius: 15px;
         height: auto;
         /* Hide scrollbar for IE, Edge and Firefox */
-        -ms-overflow-style: none;  /* IE and Edge */
-        scrollbar-width: none;  /* Firefox */
+        -ms-overflow-style: none;
+        /* IE and Edge */
+        scrollbar-width: none;
+
+        /* Firefox */
         .card-insecte {
             position: relative;
             display: inline-block;
@@ -740,11 +876,10 @@ main {
             padding: 10px;
             border-radius: 10px;
             width: 220px;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
             cursor: pointer;
             user-select: none;
             overflow: hidden;
         }
     }
 }
-

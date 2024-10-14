@@ -7,7 +7,7 @@ const mainTitle = document.querySelector(".mainTitle");
 const menu = document.querySelector(".menu");
 const body = document.getElementById("body");
 
-async function getVillagers() {
+async function getVillageois() {
     menu.remove();
     mainTitle.innerText = "Listes des villageois";
     mainTitle.style.margin = "80px 0 40px 0"
@@ -75,7 +75,12 @@ async function getVillagers() {
     const loader = document.querySelector("#loader");
     loader.remove();
 
+    //Personnality filter section
+    // const uniquePersonalities = Array.from(new Set(dataVillagers.map(villager => villager.personality)));
+    // console.log('uniquePersonalities :');
+    // console.log(uniquePersonalities);
     
+
     const searchVillager = document.createElement("div");
     searchVillager.classList.add("divRechercherVil")
     searchVillager.innerHTML = `
@@ -84,15 +89,26 @@ async function getVillagers() {
         aria-label="Rechercher un villageois d'acnh parmi le contenu du site"/>
         <span class="input-border"></span>
         `
+        //Add personnality filter 
+        // const personalityFilter = document.createElement("select");
+        // personalityFilter.id = "personalityFilter";
+    
+        // personalityFilter.innerHTML = `<option value="">Tous</option>`;
+        // uniquePersonalities.forEach(personality => {
+        //     personalityFilter.innerHTML += `<option value="${personality}">${personality}</option>`;
+        // });
+    
+        // searchVillager.appendChild(personalityFilter);
         
         const divVillagers = document.createElement("div");
         divVillagers.classList.add("villagers");
+        divVillagers.innerHTML = `<button id="backButton" onclick="goBack()">Accueil</button>`;
         
         for (i = 0; i < dataVillagers.length; i++ ) {
-        const divVillager = document.createElement("div");
-        divVillager.classList.add("card-villager");
+        const cardVillager = document.createElement("div");
+        cardVillager.classList.add("card-villager");
         let villager = dataVillagers[i];
-        divVillager.addEventListener("click", function(){
+        cardVillager.addEventListener("click", function(){
             // MODAL NAVBAR
             const closeBtn = document.getElementsByClassName("close")[0];
             const divModalIconVil = document.querySelector(".divModalIconVil");
@@ -135,7 +151,7 @@ async function getVillagers() {
                 }
             } 
 
-            const colors = divVillager.querySelector(".colorsVil");
+            const colors = cardVillager.querySelector(".colorsVil");
             
             const styles = villager.nh_details.fav_styles;
             let style1 = "";
@@ -314,8 +330,8 @@ async function getVillagers() {
         imgVillager.classList.add("imgVil");
         imgVillager.src = `${dataVillagers[i].nh_details.photo_url}`;
         // imgVillager.crossOrigin = "anonymous";
-        divVillager.append(divDetailVillager, divBirthday, nameVillager, nameFrenchVillager, imgVillager);
-        divVillagers.append(divVillager);
+        cardVillager.append(divDetailVillager, divBirthday, nameVillager, nameFrenchVillager, imgVillager);
+        divVillagers.append(cardVillager);
 
 
         // Boucle qui permet de vérifier le nom anglais avec le nom anglais de la traduction pour ensuite mettre le nom en francais du villageois. J'utilise la boucle pour le nom afficher sur la card et sur le detail de la card (au survol de la souris).
@@ -540,6 +556,8 @@ async function getFossiles() {
 
     const divFossiles = document.createElement("div");
     divFossiles.classList.add("fossiles");
+    divFossiles.innerHTML = `<button id="backButton" onclick="goBack()">Accueil</button>`;
+    
 
     for (i = 0; i < dataFossiles.length; i++ ) {
         const divFossile = document.createElement("div");
@@ -654,6 +672,7 @@ async function getArts() {
 
     const divArts = document.createElement("div");
     divArts.classList.add("arts");
+    divArts.innerHTML = `<button id="backButton" onclick="goBack()">Accueil</button>`;
 
     for (i = 0; i < dataArts.length; i++ ) {
         const divArt = document.createElement("div");
@@ -666,18 +685,18 @@ async function getArts() {
         const imgArt = document.createElement("div");
         imgArt.classList.add("imgArt");
         imgArt.innerHTML = `
-            <img src="${dataArts[i].image_url}" alt="Image de l'art ${dataArts[i].name}"/>
+            <img src="${dataArts[i].real_info.image_url}" alt="Image de l'art ${dataArts[i].name}"/>
         `;
 
         const fakeArt = dataArts[i].has_fake;
         const divFake = document.createElement("div");
         if (fakeArt) {
             const fakeBtn = document.createElement("btn");
-            fakeBtn.innerText = "See Fake Art"
+            fakeBtn.innerText = "Voir le Fake"
             let dataFake = {
-                url:`${dataArts[i].image_url}`,
-                fake_url:`${dataArts[i].fake_image_url}`,
-                authenticity:`${dataArts[i].authenticity}`
+                url:`${dataArts[i].real_info.image_url}`,
+                fake_url:`${dataArts[i].fake_info.image_url}`,
+                authenticity:`${dataArts[i].fake_info.description}`
             }
             fakeBtn.classList.add("fakeBtn");
             fakeBtn.addEventListener("click", () => {
@@ -691,7 +710,7 @@ async function getArts() {
                     <img src="${dataFake.url}" alt="Image real art"/>
                 `;
                 fakeArt.innerHTML = `
-                    <p>Fake :</p>
+                    <p>Faux :</p>
                     <img src="${dataFake.fake_url}" alt="Image fake art"/>
                 `;
 
@@ -740,6 +759,7 @@ async function getCreatureMarines() {
 
     const divCreaturesMarines = document.createElement("div");
     divCreaturesMarines.classList.add("creatures_marines");
+    divCreaturesMarines.innerHTML = `<button id="backButton" onclick="goBack()">Accueil</button>`;
 
     for (i = 0; i < dataCreaturemarine.length; i++ ) {
         const divCreatureMarine = document.createElement("div");
@@ -779,6 +799,7 @@ async function getPoissons() {
 
     const divPoissons = document.createElement("div");
     divPoissons.classList.add("poissons");
+    divPoissons.innerHTML = `<button id="backButton" onclick="goBack()">Accueil</button>`;
 
     for (i = 0; i < dataPoissons.length; i++ ) {
         const divPoisson = document.createElement("div");
@@ -818,6 +839,7 @@ async function getInsectes() {
 
     const divInsectes = document.createElement("div");
     divInsectes.classList.add("insectes");
+    divInsectes.innerHTML = `<button id="backButton" onclick="goBack()">Accueil</button>`;
 
     for (i = 0; i < dataInsectes.length; i++ ) {
         const divInsecte = document.createElement("div");
@@ -850,4 +872,8 @@ function afficherLoader() {
     loader.id = "loader";
     loaderContainer.append(loader);
     main.append(loaderContainer);
+}
+
+function goBack() {
+    window.location.href = "index.html";
 }
